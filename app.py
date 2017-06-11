@@ -5,7 +5,6 @@ from kiteconnect import KiteConnect
 import models
 
 app = Flask(__name__)
-app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SECRET_KEY'] = 'secret!'
 app.config['port'] = 6999
 api_key = "2kagnzo0t3tk8i0l"
