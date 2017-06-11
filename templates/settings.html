@@ -1,0 +1,66 @@
+<html>
+<head>
+    <title>Settings</title>
+    <link rel="stylesheet" href="/static/styles/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <a href="/home">Home</a>
+        <h1>Settings</h1>
+        <h2></h2>
+        <form id="settingsForm" action='{{ url_for("set_settings") }}' method="POST">
+            <div class="form-group">
+                <label>Stoploss value</label>
+                <input id="stoploss_value" class="form-control" name="stoploss_value"  type="number" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Squareoff value</label>
+                <input class="form-control" id="squareoff_value" class="form-control" name="squareoff_value"  type="number" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label>Trigger percent</label>
+                <input class="form-control" id="trigger_percent" class="form-control" name="trigger_percent"  type="number" step="0.01">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <script src="/static/js/jquery-3.2.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script>
+            $(function () {
+
+                function getCookie(cname) {
+                    var name = cname + "=";
+                    var decodedCookie = decodeURIComponent(document.cookie);
+                    var ca = decodedCookie.split(';');
+                    for(var i = 0; i <ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == ' ') {
+                            c = c.substring(1);
+                        }
+                        if (c.indexOf(name) == 0) {
+                            return c.substring(name.length, c.length);
+                        }
+                    }
+                    return "";
+                }
+
+                if(getCookie("stoploss_value") !== null) {
+                    $('#stoploss_value').val(getCookie("stoploss_value"))
+                }
+
+                if(getCookie("squareoff_value") !== null) {
+                    $('#squareoff_value').val(getCookie("squareoff_value"))
+                }
+
+                if(getCookie("trigger_percent") !== null) {
+                    $('#trigger_percent').val(getCookie("trigger_percent"))
+                }
+
+            });
+        </script>
+    </div>
+</body>
+</html>
