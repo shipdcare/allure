@@ -7,11 +7,11 @@ import models
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 app.config['port'] = 6999
-##api_key = "2kagnzo0t3tk8i0l"
-##api_secret = "eh5pyqmao4dr366zxjy34cs8q4klbxuy"
+api_key = "2kagnzo0t3tk8i0l"
+api_secret = "eh5pyqmao4dr366zxjy34cs8q4klbxuy"
 
-api_key = "9culfaktxf3ywh4s"
-api_secret = "6ulgdvbqrj1hqx0k211yu64iituj62eq"
+##api_key = "9culfaktxf3ywh4s"
+##api_secret = "6ulgdvbqrj1hqx0k211yu64iituj62eq"
 kite = KiteConnect(api_key=api_key)
 
 
@@ -93,6 +93,7 @@ def data_dump():
     access_token = request.cookies.get('access_token')
     # res = requests.get("https://api.kite.trade/user/margins/equity?api_key=2kagnzo0t3tk8i0l&access_token=" + access_token)
     kite.set_access_token(access_token)
+    models.Instrument.delete().where(models.Instrument.instrument_token != "").execute()
     db = models.DATABASE
     db.get_conn()
     with db.atomic():

@@ -1,7 +1,7 @@
 from peewee import *
 import json
 
-DATABASE = SqliteDatabase('Allur.db')
+DATABASE = SqliteDatabase('Allure.db')
 
 class MyModel(Model):
 
