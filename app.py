@@ -97,7 +97,7 @@ def data_dump():
     db = models.DATABASE
     db.get_conn()
     with db.atomic():
-        for instruments in kite.instruments():
+        for instruments in kite.instruments(exchange="NSE"):
             models.Instrument.create(**instruments)
     return "DONE"
 
