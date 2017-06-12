@@ -1,4 +1,4 @@
-import requests, json, os
+import json, os
 from flask import Flask, request, redirect, url_for, make_response, render_template, g
 from kiteconnect import KiteConnect
 
@@ -7,8 +7,11 @@ import models
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 app.config['port'] = 6999
-api_key = "2kagnzo0t3tk8i0l"
-api_secret = "eh5pyqmao4dr366zxjy34cs8q4klbxuy"
+##api_key = "2kagnzo0t3tk8i0l"
+##api_secret = "eh5pyqmao4dr366zxjy34cs8q4klbxuy"
+
+api_key = "9culfaktxf3ywh4s"
+api_secret = "6ulgdvbqrj1hqx0k211yu64iituj62eq"
 kite = KiteConnect(api_key=api_key)
 
 
