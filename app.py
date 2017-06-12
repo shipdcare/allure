@@ -48,7 +48,7 @@ def dated_url_for(endpoint, **values):
 
 @app.route("/")
 def index():
-    return redirect("https://kite.trade/connect/login?api_key=2kagnzo0t3tk8i0l")
+    return redirect("https://kite.trade/connect/login?api_key=" + api_key)
 
 
 @app.route("/home")
