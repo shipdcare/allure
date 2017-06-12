@@ -32,3 +32,4 @@ Werkzeug==0.12.2
 gunicorn==19.7.1
 kiteconnect==3.4.1
 peewee==2.10.1
+psycopg2==2.7.1

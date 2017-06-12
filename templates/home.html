@@ -763,7 +763,7 @@
             }
 
             $("#stocksTable1").delegate("tr", "click", function(){
-                activeStock = (this).data("instrument");
+                activeStock = $(this).data("instrument");
                 $('#active-name').text($(this).data("instrument").name);
                 $('#active-symbol').text($(this).data("instrument").tradingsymbol);
                 $('#tradingSymbol').val($(this).data("instrument").tradingsymbol);
