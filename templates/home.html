@@ -298,6 +298,8 @@
 			"&public_token=" + public_token + "&uid=" + (new Date().getTime().toString()));
 		ws.binaryType = "arraybuffer";
 
+        console.log("ADDRESS" + address);
+
 		ws.onopen = function() {
 			// Store current open connection url to check for auto reconnection
 			if (!currentWsUrl) {
@@ -682,7 +684,7 @@
     }
     return "";
 }
-        $(window).on('load', function() {
+        $(document).ready(function() {
 
             if(getCookie("stoploss_value") !== null) {
                     $('#stoploss_value').val(getCookie("stoploss_value"))
