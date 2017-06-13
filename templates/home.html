@@ -298,7 +298,7 @@
 			"&public_token=" + public_token + "&uid=" + (new Date().getTime().toString()));
 		ws.binaryType = "arraybuffer";
 
-        console.log("ADDRESS" + address);
+        //console.log("ADDRESS" + address);
 
 		ws.onopen = function() {
 			// Store current open connection url to check for auto reconnection
@@ -350,6 +350,7 @@
 
 		ws.onerror = function(e) {
 			if(this && this.readyState == this.OPEN) {
+                console.log("WS ERROR");
 				this.close();
 			}
 		};
@@ -358,6 +359,7 @@
 			// the ws id doesn't match the current global id,
 			// meaning it's a ghost close event. just ignore.
 			if(currentWsUrl && (this.url != currentWsUrl)) {
+                console.log("WS CLOSE");
 				return;
 			}
 
@@ -775,7 +777,7 @@
             ticker.on("connect", subscribe);
 
             function setTick(ticks) {
-                console.log("WORKING");
+                //console.log("WORKING");
                 ticks.forEach(function (tick) {
                     $("#" + tick.Token + "_value").text(tick.LastTradedPrice);
                     $("#" + tick.Token+ "_change").text(((tick.LastTradedPrice - tick.OpenPrice) / tick.OpenPrice) + "%");
