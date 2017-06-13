@@ -4,16 +4,16 @@ import psycopg2
 import os
 from peewee import PostgresqlDatabase
 
-#
-# import urlparse
-#
-# urlparse.uses_netloc.append('postgres')
-# url = urlparse.urlparse(os.environ["DATABASE_URL"])
-# DATABASE = PostgresqlDatabase(database=url.path[1:], user=url.username, password=url.password, host=url.hostname,
-#                         port=url.port)
 
-DATABASE = PostgresqlDatabase(database='allure', user='mohakmac', host='localhost',
-                         port='5432')
+import urlparse
+
+urlparse.uses_netloc.append('postgres')
+url = urlparse.urlparse(os.environ["DATABASE_URL"])
+DATABASE = PostgresqlDatabase(database=url.path[1:], user=url.username, password=url.password, host=url.hostname,
+                        port=url.port)
+
+##DATABASE = PostgresqlDatabase(database='allure', user='mohakmac', host='localhost',
+##                         port='5432')
 
 class MyModel(Model):
 
