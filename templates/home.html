@@ -688,8 +688,6 @@
 }
         $(document).ready(function() {
 
-            console.log("RUNNING");
-
             if(getCookie("stoploss_value") !== null) {
                     $('#stoploss_value').val(getCookie("stoploss_value"))
                 }
@@ -744,6 +742,8 @@
             });
 
             var tokens = [];
+            var api_key = '2kagnzo0t3tk8i0l';
+            var ticker = new KiteTicker(api_key, getCookie("user_id"), getCookie("public_token"));
 
             function loadSavedInstruments() {
                 tokens = [];
@@ -759,7 +759,20 @@
                     savedInstruments.forEach(function (instrument) {
                         $("#stocksTable1").append('<tr class="stock-tr" id=' + instrument.instrument_token + '>' + '<td>'+ instrument.name + '</td>'+ '<td id=' + instrument.instrument_token + "_change" +'></td>' + '<td id=' + instrument.instrument_token + "_value" +'></td>' +'</tr>');
                         $("#" + instrument.instrument_token).data("instrument", {exchange: instrument.exchange, name: instrument.name, tradingsymbol: instrument.tradingsymbol, token: instrument.instrument_token})
-                    })
+                    });
+                    ticker.connect();
+                    ticker.on("tick", setTick);
+                    ticker.on("connect", subscribe);
+
+                    ticker.autoReconnect(true, 50, 5);
+
+                    ticker.on("noreconnect", function() {
+                        console.log("noreconnect")
+                    });
+
+                    ticker.on("reconnecting", function(reconnect_interval, reconnections) {
+                        console.log("Reconnecting: attempet - ", reconnections, " innterval - ", reconnect_interval);
+                    });
                 });
             }
 
@@ -772,11 +785,6 @@
             });
 
              //var api_key = '9culfaktxf3ywh4s';
-            var api_key = '2kagnzo0t3tk8i0l';
-            var ticker = new KiteTicker(api_key, getCookie("user_id"), getCookie("public_token"));
-            ticker.connect();
-            ticker.on("tick", setTick);
-            ticker.on("connect", subscribe);
 
             function setTick(ticks) {
                 //console.log("WORKING");
@@ -791,21 +799,13 @@
             }
 
             function subscribe() {
-                console.log(tokens);
+                // console.log(tokens);
                 var items = tokens;
                 ticker.subscribe(items);
                 ticker.setMode(ticker.modeQuote, items);
             }
 
-            ticker.autoReconnect(true, 50, 5);
 
-            ticker.on("noreconnect", function() {
-                console.log("noreconnect")
-            });
-
-            ticker.on("reconnecting", function(reconnect_interval, reconnections) {
-                console.log("Reconnecting: attempet - ", reconnections, " innterval - ", reconnect_interval);
-            });
         });
     </script>
   </body>
