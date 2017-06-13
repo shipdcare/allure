@@ -749,7 +749,7 @@
             function loadSavedInstruments() {
                 tokens = [];
                 var savedInstruments= [];
-                 $("#stocksTable1 > tbody").html("");
+                 $("#stocksTable1").find("> tbody").html("");
                 $.getJSON({
                     url: '{{ url_for("saved_instruments") }}'
                 }).done(function (data) {
@@ -774,14 +774,12 @@
 
             function setTick(ticks) {
                 ticks.forEach(function (tick) {
-                    //console.log(activeStock);
-                    //console.log(tick.Token);
+                    $("#" + tick.Token + "_value").text(tick.LastTradedPrice);
+                    $("#" + tick.Token+ "_change").text(((tick.LastTradedPrice - tick.OpenPrice) / tick.OpenPrice) + "%");
                     if(activeStock.token == tick.Token){
                         console.log("WORKING");
                         setStock(tick);
                     }
-                    $("#" + tick.Token + "_value").text(tick.LastTradedPrice);
-                    $("#" + tick.Token+ "_change").text(((tick.LastTradedPrice - tick.OpenPrice) / tick.OpenPrice) + "%");
                 });
             }
 
