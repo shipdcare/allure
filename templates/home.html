@@ -739,13 +739,6 @@
 
             var tokens = [];
 
-            //var api_key = '9culfaktxf3ywh4s';
-            var api_key = '2kagnzo0t3tk8i0l';
-            var ticker = new KiteTicker(api_key, getCookie("user_id"), getCookie("public_token"));
-            ticker.connect();
-            ticker.on("tick", setTick);
-            ticker.on("connect", subscribe);
-
             function loadSavedInstruments() {
                 tokens = [];
                 var savedInstruments= [];
@@ -772,6 +765,13 @@
                 $('#tradingExchange').val($(this).data("instrument").exchange);
             });
 
+             //var api_key = '9culfaktxf3ywh4s';
+            var api_key = '2kagnzo0t3tk8i0l';
+            var ticker = new KiteTicker(api_key, getCookie("user_id"), getCookie("public_token"));
+            ticker.connect();
+            ticker.on("tick", setTick);
+            ticker.on("connect", subscribe);
+
             function setTick(ticks) {
                 console.log("WORKING");
                 ticks.forEach(function (tick) {
@@ -789,6 +789,16 @@
                 ticker.subscribe(items);
                 ticker.setMode(ticker.modeQuote, items);
             }
+
+            ticker.autoReconnect(true, 50, 5);
+
+            ticker.on("noreconnect", function() {
+                console.log("noreconnect")
+            });
+
+            ticker.on("reconnecting", function(reconnect_interval, reconnections) {
+                console.log("Reconnecting: attempet - ", reconnections, " innterval - ", reconnect_interval);
+            });
         });
     </script>
   </body>
