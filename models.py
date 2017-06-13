@@ -4,19 +4,14 @@ import psycopg2
 import os
 from peewee import PostgresqlDatabase
 
-if 'HEROKU' in os.environ:
-    import urlparse
-    urlparse.uses_netloc.append('postgres')
-    url = urlparse.urlparse(os.environ["DATABASE_URL"])
-    DATABASE = PostgresqlDatabase(database=url.path[1:], user=url.username, password=url.password, host=url.hostname,
-                            port=url.port)
-else:
-    DATABASE = PostgresqlDatabase(
-        'allure',
-        host= 'localhost',
-        port= 5432,
-        user= 'mohakmac'
-    )
+
+import urlparse
+
+urlparse.uses_netloc.append('postgres')
+url = urlparse.urlparse(os.environ["DATABASE_URL"])
+DATABASE = PostgresqlDatabase(database=url.path[1:], user=url.username, password=url.password, host=url.hostname,
+                        port=url.port)
+
 
 class MyModel(Model):
 
