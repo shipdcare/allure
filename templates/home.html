@@ -740,7 +740,7 @@
             var tokens = [];
 
             var api_key = '9culfaktxf3ywh4s';
-            // var api_key = '2kagnzo0t3tk8i0l';
+            //var api_key = '2kagnzo0t3tk8i0l';
             var ticker = new KiteTicker(api_key, getCookie("user_id"), getCookie("public_token"));
             ticker.connect();
             ticker.on("tick", setTick);
@@ -759,7 +759,7 @@
                     });
                     savedInstruments.forEach(function (instrument) {
                         $("#stocksTable1").append('<tr class="stock-tr" id=' + instrument.instrument_token + '>' + '<td>'+ instrument.name + '</td>'+ '<td id=' + instrument.instrument_token + "_change" +'></td>' + '<td id=' + instrument.instrument_token + "_value" +'></td>' +'</tr>');
-                        $("#" + instrument.instrument_token).data("instrument", {exchange: instrument.exchange, name: instrument.name, tradingsymbol: instrument.tradingsymbol})
+                        $("#" + instrument.instrument_token).data("instrument", {exchange: instrument.exchange, name: instrument.name, tradingsymbol: instrument.tradingsymbol, token: instrument.instrument_token})
                     })
                 });
             }
@@ -774,8 +774,11 @@
 
             function setTick(ticks) {
                 ticks.forEach(function (tick) {
+                    //console.log(activeStock);
+                    //console.log(tick.Token);
                     if(activeStock.token == tick.Token){
-                        setStock(token);
+                        console.log("WORKING");
+                        setStock(tick);
                     }
                     $("#" + tick.Token + "_value").text(tick.LastTradedPrice);
                     $("#" + tick.Token+ "_change").text(((tick.LastTradedPrice - tick.OpenPrice) / tick.OpenPrice) + "%");
