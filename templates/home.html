@@ -791,6 +791,7 @@
             }
 
             function subscribe() {
+                console.log(tokens);
                 var items = tokens;
                 ticker.subscribe(items);
                 ticker.setMode(ticker.modeQuote, items);
