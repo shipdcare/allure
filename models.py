@@ -1,7 +1,22 @@
 from peewee import *
 import json
+import psycopg2
+import os
+from urllib.parse import urlparse
+from peewee import PostgresqlDatabase
 
-DATABASE = SqliteDatabase('Allure.db')
+if 'HEROKU' in os.environ:
+    urlparse.uses_netloc.append('postgres')
+    url = urlparse.urlparse(os.environ["DATABASE_URL"])
+    DATABASE = PostgresqlDatabase(database=url.path[1:], user=url.username, password=url.password, host=url.hostname,
+                            port=url.port)
+else:
+    DATABASE = PostgresqlDatabase(
+        'allure',
+        host= 'localhost',
+        port= 5432,
+        user= 'mohakmac'
+    )
 
 class MyModel(Model):
 
@@ -39,6 +54,7 @@ class SavedInstruments(Model):
 
     class Meta:
         database = DATABASE
+
 
 
 
