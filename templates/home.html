@@ -773,6 +773,7 @@
             });
 
             function setTick(ticks) {
+                console.log("WORKING");
                 ticks.forEach(function (tick) {
                     $("#" + tick.Token + "_value").text(tick.LastTradedPrice);
                     $("#" + tick.Token+ "_change").text(((tick.LastTradedPrice - tick.OpenPrice) / tick.OpenPrice) + "%");
