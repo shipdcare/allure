@@ -2,7 +2,7 @@ from peewee import *
 import json
 import psycopg2
 import os
-from urllib.parse import urlparse
+import urlparse
 from peewee import PostgresqlDatabase
 
 if 'HEROKU' in os.environ:
