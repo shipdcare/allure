@@ -2,10 +2,10 @@ from peewee import *
 import json
 import psycopg2
 import os
-import urlparse
 from peewee import PostgresqlDatabase
 
 if 'HEROKU' in os.environ:
+    import urlparse
     urlparse.uses_netloc.append('postgres')
     url = urlparse.urlparse(os.environ["DATABASE_URL"])
     DATABASE = PostgresqlDatabase(database=url.path[1:], user=url.username, password=url.password, host=url.hostname,
