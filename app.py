@@ -154,6 +154,15 @@ def post_trade():
     return "DONE"
 
 
+@app.route('/trades')
+def get_trades():
+    elems = []
+    data = models.Trades.select()
+    for d in data:
+        elems.append(
+            {"order_id": d.order_id, "exchange_order_id": d.exchange_order_id})
+    return json.dumps(elems)
+
 
 @app.route('/order', methods=['POST'])
 def order():
