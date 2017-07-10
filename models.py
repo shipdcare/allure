@@ -55,5 +55,26 @@ class SavedInstruments(Model):
         database = DATABASE
 
 
-
-
+class Trades(Model):
+    order_id =  CharField()
+    exchange_order_id = CharField()
+    placed_by = CharField()
+    status = CharField()
+    status_message = CharField()
+    tradingsymbol = CharField()
+    exchange = CharField()
+    order_type = CharField()
+    transaction_type = CharField()
+    validity= CharField()
+    product = CharField()
+    average_price = CharField()
+    price = CharField()
+    quantity = CharField()
+    filled_quantity = CharField()
+    unfilled_quantity = CharField()
+    trigger_price = CharField()
+    status_message = CharField()
+    user_id = CharField()
+    order_timestamp = CharField()
+    exchange_timestamp= CharField()
+    checksum = CharField()

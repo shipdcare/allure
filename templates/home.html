@@ -139,7 +139,6 @@
     <script src="/static/js/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/bluebird.min.js"></script>
     <script>
         $(function() {
 
@@ -307,7 +306,7 @@
 			}
 
 			// Reset reconnections attempt
-			reconnections = 0
+			reconnections = 0;
 
 			// Trigger onconnect event
 			trigger("connect");

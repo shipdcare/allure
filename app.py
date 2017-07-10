@@ -21,7 +21,7 @@ def before_request():
     """Connect to the database before each request"""
     g.db = models.DATABASE
     g.db.get_conn()
-    g.db.create_tables([models.Instrument, models.SavedInstruments], safe=True)
+    g.db.create_tables([models.Instrument, models.SavedInstruments, models.Trades], safe=True)
 
 
 @app.after_request
@@ -135,7 +135,24 @@ def set_settings():
     response.set_cookie('squareoff_value', request.form['squareoff_value'])
     response.set_cookie('stoploss_value', request.form["stoploss_value"])
     response.set_cookie('trigger_percent', request.form["trigger_percent"])
+    response.set_cookie('ltp', request.form["ltp"])
     return response
+
+
+@app.route('/trades', methods=['POST'])
+def post_trade():
+    content = request.get_json()
+    trade = models.Trades.create(order_id= content["order_id"],
+                                 exchange_order_id = content["exchange_order_id"],
+                                 placed_by = content["placed_by"],
+                                 status = content["status"],
+                                 tradingsymbol = content["tradingsymbol"],
+                                 price = content["price"],
+                                 quantity = content["quantity"],
+                                 filled_quantity= content["filled_quantity"],
+                                 unfilled_quantity = content["unfilled_quantity"])
+    return "DONE"
+
 
 
 @app.route('/order', methods=['POST'])
