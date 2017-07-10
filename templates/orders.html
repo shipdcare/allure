@@ -20,7 +20,7 @@
             <tr>
                 <td>{{ order.order_timestamp }}</td>
                 <td>{{ order.tradingsymbol }}</td>
-                <td>{{ order.quantity + "@" + order.price }}</td>
+                <td>{{ str(order.quantity) + "@" + str(order.price) }}</td>
                 <td>{{ order.transaction_type }}</td>
                 <td>{{ order.product }}</td>
                 <td>{{ order.status }}</td>
