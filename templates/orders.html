@@ -1,3 +1,27 @@
-{% for order in data %}
-    {{ order.tradingsymbol }}
-{% endfor %}
+<html>
+<head>
+    <title>Settings</title>
+    <link rel="stylesheet" href="/static/styles/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>Symbol</th>
+            <th>Order</th>
+            <th>Transaction type</th>
+            <th>Product</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+        {% for order in data %}
+            {{ order.order_timestamp }}
+            {{ order.tradingsymbol }}
+            {{ order.quantity + "@" + order.price }}
+            {{ order.transaction_type }}
+            {{ order.product }}
+            {{ order.status }}
+        {% endfor %}
+    </table>
+</body>
