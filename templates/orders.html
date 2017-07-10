@@ -15,13 +15,17 @@
             <th>Status</th>
         </tr>
     </thead>
+    <tbody>
         {% for order in data %}
-            {{ order.order_timestamp }}
-            {{ order.tradingsymbol }}
-            {{ order.quantity + "@" + order.price }}
-            {{ order.transaction_type }}
-            {{ order.product }}
-            {{ order.status }}
+            <tr>
+                <td>{{ order.order_timestamp }}</td>
+                <td>{{ order.tradingsymbol }}</td>
+                <td>{{ order.quantity + "@" + order.price }}</td>
+                <td>{{ order.transaction_type }}</td>
+                <td>{{ order.product }}</td>
+                <td>{{ order.status }}</td>
+            </tr>
         {% endfor %}
+    </tbody>
     </table>
 </body>
