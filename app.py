@@ -164,6 +164,14 @@ def get_trades():
     return json.dumps(elems)
 
 
+@app.route('/orders')
+def get_orders():
+    access_token = request.cookies.get('access_token')
+    kite.set_access_token(access_token)
+    orders = kite.orders()
+    return render_template("orders.html", data=orders)
+
+
 @app.route('/order', methods=['POST'])
 def order():
     access_token = request.cookies.get('access_token')
