@@ -721,7 +721,11 @@
                 $("#active-change-percent").text((stock.LastTradedPrice - stock.OpenPrice)/stock.OpenPrice);
                 $("#active-volume").text(stock.LastTradedPrice);
                 $('#trigger_price').val(stock.LastTradedPrice - (stock.LastTradedPrice * getCookie('trigger_percent') / 100));
-                $('#price').val(stock.LastTradedPrice - getCookie('ltp'));
+                if($('input[name=action]:checked', '#myForm').val() == "BUY") {
+                    $('#price').val(stock.LastTradedPrice + $("#ltp").val());
+                } else {
+                    $('#price').val(stock.LastTradedPrice - $("#ltp").val());
+                }
             }
 
             loadSavedInstruments();
