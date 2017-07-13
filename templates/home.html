@@ -69,10 +69,12 @@
     <div class="container">
         <form id="myForm" action='{{ url_for("order") }}' method="POST">
             <div class="row">
-                <label>Buy</label>
+                <label>
                     <input type="radio" name="action" value="BUY" checked>
-                <label>Sell
+                Buy</label>
+                <label>
                     <input type="radio" name="action" value="SELL">
+                    Sell
                 </label>
             </div>
             <div class="row">
@@ -718,6 +720,8 @@
                 $("#active-volume").text(stock.LastTradedPrice);
                 $('#trigger_price').val(stock.LastTradedPrice - (stock.LastTradedPrice * getCookie('trigger_percent') / 100));
                 if($('input[name=action]:checked', '#myForm').val() == "BUY") {
+                    console.log($("#ltp").val());
+                    console.log(stock.LastTradedPrice);
                     $('#price').val(stock.LastTradedPrice + $("#ltp").val());
                 } else {
                     $('#price').val(stock.LastTradedPrice - $("#ltp").val());
