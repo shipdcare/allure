@@ -69,6 +69,13 @@
     <div class="container">
         <form id="myForm" action='{{ url_for("order") }}' method="POST">
             <div class="row">
+                <label>Buy</label>
+                    <input type="radio" name="action" value="BUY" checked>
+                <label>Sell
+                    <input type="radio" name="action" value="SELL">
+                </label>
+            </div>
+            <div class="row">
                 <label>
               <input type="radio" name="orderRadios" value="MARKET" checked>
               MKT
@@ -134,8 +141,7 @@
       </div>
       <div class="row">
         <div class="container actions">
-          <input type="submit" name="action" value="SELL" class="btn btn-danger" >
-          <input type="submit" name="action" value="BUY" class="btn btn-primary" >
+          <input type="submit" class="btn btn-primary" >
         </div>
       </div>
                     </form>
@@ -699,6 +705,12 @@
                 $('#squareoff_value').val(getCookie("squareoff_value"))
             }
 
+            if(getCookie("ltp") !== null) {
+                $('#ltp').val(getCookie("ltp"))
+            } else {
+                $('#ltp').val(0)
+            }
+
             var activeStock = {};
 
             function setStock(stock) {
@@ -709,7 +721,7 @@
                 $("#active-change-percent").text((stock.LastTradedPrice - stock.OpenPrice)/stock.OpenPrice);
                 $("#active-volume").text(stock.LastTradedPrice);
                 $('#trigger_price').val(stock.LastTradedPrice - (stock.LastTradedPrice * getCookie('trigger_percent') / 100));
-                $('#price').val(stock.LastTradedPrice);
+                $('#price').val(stock.LastTradedPrice - getCookie('ltp'));
             }
 
             loadSavedInstruments();
@@ -796,7 +808,6 @@
                     $("#" + tick.Token + "_value").text(tick.LastTradedPrice);
                     $("#" + tick.Token+ "_change").text(((tick.LastTradedPrice - tick.OpenPrice) / tick.OpenPrice) + "%");
                     if(activeStock.token == tick.Token){
-                        console.log("WORKING");
                         setStock(tick);
                     }
                 });
