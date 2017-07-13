@@ -127,6 +127,10 @@
           <label>Trailing SL</label>
           <input class="form-control" id="trailing_stoploss" name="trailing_stoploss" type="number" placeholder="" step="0.01">
         </div>
+          <div class="col-md-3">
+          <label>LTP+-</label>
+          <input class="form-control" id="ltp" name="ltp" type="number" placeholder="" step="0.01">
+        </div>
       </div>
       <div class="row">
         <div class="container actions">
@@ -688,12 +692,12 @@
         $(document).ready(function() {
 
             if(getCookie("stoploss_value") !== null) {
-                    $('#stoploss_value').val(getCookie("stoploss_value"))
-                }
+                $('#stoploss_value').val(getCookie("stoploss_value"))
+            }
 
-                if(getCookie("squareoff_value") !== null) {
-                    $('#squareoff_value').val(getCookie("squareoff_value"))
-                }
+            if(getCookie("squareoff_value") !== null) {
+                $('#squareoff_value').val(getCookie("squareoff_value"))
+            }
 
             var activeStock = {};
 
