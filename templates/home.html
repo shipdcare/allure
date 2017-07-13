@@ -720,9 +720,11 @@
                 $("#active-volume").text(stock.LastTradedPrice);
                 $('#trigger_price').val(stock.LastTradedPrice - (stock.LastTradedPrice * getCookie('trigger_percent') / 100));
                 if($('input[name=action]:checked', '#myForm').val() == "BUY") {
-                    $('#price').val(parseInt(stock.LastTradedPrice) + parseInt($("#ltp").val()));
+                    console.log($("#ltp").val());
+                    console.log(stock.LastTradedPrice);
+                    $('#price').val(parseFloat(stock.LastTradedPrice) + parseFloat($("#ltp").val()));
                 } else {
-                    $('#price').val(parseInt(stock.LastTradedPrice) - parseInt($("#ltp").val()));
+                    $('#price').val(parseFloat(stock.LastTradedPrice) - parseFloat($("#ltp").val()));
                 }
             }
 
