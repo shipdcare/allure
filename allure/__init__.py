@@ -4,7 +4,7 @@ import os
 from flask import Flask, request, redirect, url_for, make_response, render_template, g
 from kiteconnect import KiteConnect
 
-from allure import models
+import models
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
