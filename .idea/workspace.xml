@@ -53,7 +53,7 @@
         <entry file="file://$PROJECT_DIR$/allure/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
-              <caret line="10" column="85" selection-start-line="10" selection-start-column="85" selection-end-line="10" selection-end-column="85" />
+              <caret line="10" column="106" selection-start-line="10" selection-start-column="106" selection-end-line="10" selection-end-column="106" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -735,7 +735,7 @@
     <entry file="file://$PROJECT_DIR$/allure/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="10" column="85" selection-start-line="10" selection-start-column="85" selection-end-line="10" selection-end-column="85" />
+          <caret line="10" column="106" selection-start-line="10" selection-start-column="106" selection-end-line="10" selection-end-column="106" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>

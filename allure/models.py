@@ -8,7 +8,7 @@ import json
 # DATABASE = PostgresqlDatabase(database=url.path[1:], user=url.username, password=url.password, host=url.hostname,
 #                         port=url.port)
 
-DATABASE = PostgresqlDatabase('allure', user='postgres', host="localhost", port="5432")
+DATABASE = PostgresqlDatabase('allure', user='postgres', host="localhost", port="5432", password="password")
 
 ## DATABASE = SqliteDatabase("Allure.db")
 
