@@ -1,9 +1,5 @@
 from peewee import *
 import json
-import psycopg2
-import os
-from peewee import SqliteDatabase
-
 
 # import urlparse
 
@@ -12,15 +8,8 @@ from peewee import SqliteDatabase
 # DATABASE = PostgresqlDatabase(database=url.path[1:], user=url.username, password=url.password, host=url.hostname,
 #                         port=url.port)
 
-## DATABASE = PostgresqlDatabase('allure', user='postgres', password="password")
+DATABASE = PostgresqlDatabase('allure', user='postgres', password="password")
 
-DATABASE = SqliteDatabase(
-    os.path.join(
-        os.path.dirname(os.path.realpath(__file__)),
-        'allure.db'
-    ),
-    threadlocals=True
-)
 
 class MyModel(Model):
 
