@@ -102,7 +102,7 @@ def data_dump():
     return "DONE"
 
 @app.route("/data_dump_nfo")
-def data_dump():
+def data_dump_nfo():
     access_token = request.cookies.get('access_token')
     # res = requests.get("https://api.kite.trade/user/margins/equity?api_key=2kagnzo0t3tk8i0l&access_token=" + access_token)
     kite.set_access_token(access_token)
