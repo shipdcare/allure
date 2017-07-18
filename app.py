@@ -101,6 +101,19 @@ def data_dump():
             models.Instrument.create(**instruments)
     return "DONE"
 
+@app.route("/data_dump_nfo")
+def data_dump():
+    access_token = request.cookies.get('access_token')
+    # res = requests.get("https://api.kite.trade/user/margins/equity?api_key=2kagnzo0t3tk8i0l&access_token=" + access_token)
+    kite.set_access_token(access_token)
+    ## models.Instrument.delete().where(models.Instrument.instrument_token != "").execute()
+    db = models.DATABASE
+    db.get_conn()
+    with db.atomic():
+        for instruments in kite.instruments(exchange="NFO"):
+            models.Instrument.create(**instruments)
+    return "DONE"
+
 
 @app.route("/instruments")
 def instruments():
