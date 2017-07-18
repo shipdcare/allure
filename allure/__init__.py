@@ -1,8 +1,10 @@
-import json, os
+import json
+import os
+
 from flask import Flask, request, redirect, url_for, make_response, render_template, g
 from kiteconnect import KiteConnect
 
-import models
+from allure import models
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
