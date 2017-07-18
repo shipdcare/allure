@@ -118,13 +118,12 @@ def data_dump_nfo():
 @app.route("/instruments")
 def instruments():
     elems = []
-    data = models.Instrument.select().where(models.Instrument.exchange << ["NSE"])
+    data = models.Instrument.select()
     for d in data:
         elems.append(
             {"value": d.tradingsymbol, "tradingsymbol": d.tradingsymbol, "token": d.instrument_token, "name": d.name,
              "exchange": d.exchange})
     return json.dumps(elems)
-
 
 @app.route("/connect")
 def connect():
@@ -265,4 +264,5 @@ def order():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.debug = True
+    app.run(port=3000)
