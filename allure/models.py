@@ -2,7 +2,7 @@ from peewee import *
 import json
 import psycopg2
 import os
-from peewee import PostgresqlDatabase
+from peewee import SqliteDatabase
 
 
 # import urlparse
@@ -14,7 +14,13 @@ from peewee import PostgresqlDatabase
 
 ## DATABASE = PostgresqlDatabase('allure', user='postgres', password="password")
 
-DATABASE = SqliteDatabase("/var/www/allure/Allure.db")
+DATABASE = SqliteDatabase(
+    os.path.join(
+        os.path.dirname(os.path.realpath(__file__)),
+        'allure.db'
+    ),
+    threadlocals=True
+)
 
 class MyModel(Model):
 
