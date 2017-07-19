@@ -127,7 +127,7 @@ def settings():
     return render_template('settings.html')
 
 
-@app.route('/set_settings', methods=['POST'])
+@app.route('/set_settings/', methods=['POST'])
 def set_settings():
     response = make_response(redirect(url_for("home")))
     response.set_cookie('squareoff_value', request.form['squareoff_value'])
@@ -136,20 +136,6 @@ def set_settings():
     response.set_cookie('ltp', request.form["ltp"])
     return response
 
-
-@app.route('/trades', methods=['POST'])
-def post_trade():
-    content = request.get_json()
-    trade = models.Trades.create(order_id= content["order_id"],
-                                 exchange_order_id = content["exchange_order_id"],
-                                 placed_by = content["placed_by"],
-                                 status = content["status"],
-                                 tradingsymbol = content["tradingsymbol"],
-                                 price = content["price"],
-                                 quantity = content["quantity"],
-                                 filled_quantity= content["filled_quantity"],
-                                 unfilled_quantity = content["unfilled_quantity"])
-    return "DONE"
 
 
 @app.route('/trades')
