@@ -18,19 +18,19 @@ kite = KiteConnect(api_key=api_key)
 
 
 
-@app.before_request
-def before_request():
-    """Connect to the database before each request"""
-    g.db = models.DATABASE
-    g.db.get_conn()
-    g.db.create_tables([models.Instrument, models.SavedInstruments, models.Trades], safe=True)
-
-
-@app.after_request
-def after_request(response):
-    """"Close the database connection after each request"""
-    g.db.close()
-    return response
+# @app.before_request
+# def before_request():
+#     """Connect to the database before each request"""
+#     g.db = models.DATABASE
+#     g.db.get_conn()
+#     g.db.create_tables([models.Instrument, models.SavedInstruments, models.Trades], safe=True)
+#
+#
+# @app.after_request
+# def after_request(response):
+#     """"Close the database connection after each request"""
+#     g.db.close()
+#     return response
 
 @app.route("/")
 def index():
