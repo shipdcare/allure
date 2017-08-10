@@ -44,6 +44,9 @@ class SavedInstruments(Model):
     tradingsymbol = CharField()
     exchange = CharField()
     name = CharField()
+    last_price = FloatField()
+    instrument_type = CharField()
+    exchange_token = CharField()
 
     class Meta:
         database = DATABASE

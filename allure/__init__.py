@@ -17,15 +17,14 @@ api_secret = "6ulgdvbqrj1hqx0k211yu64iituj62eq"
 kite = KiteConnect(api_key=api_key)
 
 
+@app.before_first_request
+def before_request():
+    """Connect to the database before each request"""
+    g.db = models.DATABASE
+    g.db.get_conn()
+    g.db.create_tables([models.Instrument, models.SavedInstruments, models.Trades], safe=True)
 
-# @app.before_request
-# def before_request():
-#     """Connect to the database before each request"""
-#     g.db = models.DATABASE
-#     g.db.get_conn()
-#     g.db.create_tables([models.Instrument, models.SavedInstruments, models.Trades], safe=True)
-#
-#
+
 # @app.after_request
 # def after_request(response):
 #     """"Close the database connection after each request"""
@@ -39,7 +38,18 @@ def index():
 
 @app.route("/home")
 def home():
-    return render_template("home.html")
+    access_token = request.cookies.get('access_token')
+    # res = requests.get("https://api.kite.trade/user/margins/equity?api_key=2kagnzo0t3tk8i0l&access_token=" + access_token)
+    kite.set_access_token(access_token)
+    instruments = kite.instruments(exchange="NSE")
+    return render_template("index.html")
+
+@app.route("/get_instruments")
+def get_instruments():
+    access_token = request.cookies.get('access_token')
+    kite.set_access_token(access_token)
+    ins = kite.instruments(exchange="NSE")
+    return json.dumps(ins)
 
 
 @app.route('/get_quote')
@@ -54,10 +64,13 @@ def get_quote():
 @app.route('/save_instrument', methods=['POST'])
 def save_instrument():
     content = request.get_json()
-    instrument = models.SavedInstruments.get_or_create(instrument_token=content["token"],
+    instrument = models.SavedInstruments.get_or_create(instrument_token=content["instrument_token"],
                                                        tradingsymbol=content["tradingsymbol"],
                                                        name=content["name"],
-                                                       exchange=content["exchange"])
+                                                       exchange=content["exchange"],
+                                                       last_price=content["last_price"],
+                                                       exchange_token=content["exchange_token"],
+                                                       instrument_type=content["instrument_type"])
     return 'done'
 
 
@@ -69,7 +82,8 @@ def saved_instruments():
         elems.append({"instrument_token": d.instrument_token,
                       "tradingsymbol": d.tradingsymbol,
                       "name": d.name,
-                      "exchange": d.exchange })
+                      "exchange": d.exchange,
+                      "last_price": d.last_price })
     return json.dumps(elems)
 
 
@@ -156,6 +170,85 @@ def get_orders():
     return render_template("orders.html", data=orders)
 
 
+@app.route('/new_order', methods=['POST'])
+def new_order():
+    access_token = request.cookies.get('access_token')
+    kite.set_access_token(access_token)
+    content = request.get_json()
+    try:
+            if content["orderRadios"] == "MARKET":
+                order_id = kite.order_place(tradingsymbol=content["tradingsymbol"],
+                                            exchange=content["exchange"],
+                                            transaction_type=content["action"],
+                                            quantity=content["quantity"],
+                                            order_type="MARKET",
+                                            product="MIS",
+                                            disclosed_quantity=content["disclosed_quantity"])
+                print(order_id)
+            elif content["orderRadios"] == "LIMIT":
+                order_id = kite.order_place(tradingsymbol=content["tradingsymbol"],
+                                            exchange=content["exchange"],
+                                            transaction_type=content["action"],
+                                            quantity=content["quantity"],
+                                            order_type="LIMIT",
+                                            product="MIS",
+                                            price=content["price"],
+                                            disclosed_quantity=content["disclosed_quantity"])
+                print("Order placed. ID is", order_id)
+            elif content["orderRadios"] == "SL":
+                order_id = kite.order_place(tradingsymbol=content["tradingsymbol"],
+                                            exchange=content["exchange"],
+                                            transaction_type=content["action"],
+                                            quantity=content["quantity"],
+                                            order_type="SL",
+                                            product="MIS",
+                                            price=content["price"],
+                                            disclosed_quantity=content["disclosed_quantity"],
+                                            trigger_price=content["trigger_price"])
+                print(order_id)
+            elif content["orderRadios"] == "SL-M":
+                order_id = kite.order_place(tradingsymbol=content["tradingsymbol"],
+                                            exchange=content["exchange"],
+                                            transaction_type=content["action"],
+                                            quantity=content["quantity"],
+                                            order_type="SL-M",
+                                            product="MIS",
+                                            disclosed_quantity=content["disclosed_quantity"],
+                                            trigger_price=content["trigger_price"])
+                print(order_id)
+            elif content["orderRadios"] == "BO":
+                order_id = kite.order_place(tradingsymbol=content["tradingsymbol"],
+                                            variety="bo",
+                                            exchange=content["exchange"],
+                                            transaction_type=content["action"],
+                                            quantity=content["quantity"],
+                                            order_type="LIMIT",
+                                            product="MIS",
+                                            price=content["price"],
+                                            trailing_stoploss=content['trailing_stoploss'],
+                                            stoploss_value=content['stoploss_value'],
+                                            squareoff_value=content['squareoff_value'],
+                                            validity="DAY")
+                print("Order placed. ID is", order_id)
+            elif content["orderRadios"] == "CO":
+                order_id = kite.order_place(tradingsymbol=content["tradingSymbol"],
+                                            exchange=content["tradingExchange"],
+                                            variety="co",
+                                            transaction_type=content["action"],
+                                            quantity=content["quantity"],
+                                            order_type="MARKET",
+                                            product="MIS",
+                                            trigger_price=content["trigger_price"],
+                                            disclosed_quantity=content["disclosed_quantity"])
+                print("Order placed. ID is", order_id)
+            else:
+                print("UNKNOWN ORDER TRIGGERED")
+    except Exception as e:
+        print(str(e))
+        raise
+    return 'DONE'
+
+
 @app.route('/order', methods=['POST'])
 def order():
     access_token = request.cookies.get('access_token')
@@ -236,4 +329,4 @@ def order():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=6999)
