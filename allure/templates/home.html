@@ -1272,7 +1272,6 @@
                     });
                 });
             }
-
             $("#stocksTable1").delegate("tr", "click", function(){
                 activeStock = $(this).data("instrument");
                 $('#active-name').text($(this).data("instrument").name);
@@ -1280,9 +1279,7 @@
                 $('#tradingSymbol').val($(this).data("instrument").tradingsymbol);
                 $('#tradingExchange').val($(this).data("instrument").exchange);
             });
-
              //var api_key = '9culfaktxf3ywh4s';
-
             function setTick(ticks) {
                 //console.log("WORKING");
                 ticks.forEach(function (tick) {
@@ -1293,15 +1290,12 @@
                     }
                 });
             }
-
             function subscribe() {
                 // console.log(tokens);
                 var items = tokens;
                 ticker.subscribe(items);
                 ticker.setMode(ticker.modeQuote, items);
             }
-
-
         });
     </script>
   </body>
